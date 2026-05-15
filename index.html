@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>書籍庫存查詢</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./config.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="search-panel" aria-labelledby="page-title">
+        <p class="eyebrow">Book Inventory</p>
+        <h1 id="page-title">書籍庫存查詢</h1>
+
+        <form class="search-box" id="searchForm">
+          <label for="searchInput">輸入書名、條碼、作者或關鍵字</label>
+          <div class="search-row">
+            <input
+              id="searchInput"
+              name="query"
+              type="search"
+              autocomplete="off"
+              placeholder="例如：978、村上春樹、心理、設計"
+            />
+            <button type="submit">查詢</button>
+          </div>
+        </form>
+
+        <div class="status-bar">
+          <span id="resultSummary">準備查詢中</span>
+          <span id="updatedAt"></span>
+        </div>
+      </section>
+
+      <section class="results-panel" aria-live="polite">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>書名</th>
+                <th>條碼</th>
+                <th>作者</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState">
+            <strong>請輸入關鍵字查詢</strong>
+            <span>可用書名、條碼，或併在書名欄中的作者文字搜尋。</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
