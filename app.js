@@ -86,6 +86,10 @@ function requestJsonp(url, params) {
     const callbackName = `bookSearchCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const script = document.createElement("script");
     const requestUrl = new URL(url);
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      reject(new Error("JSONP request timed out"));
+    }, 12000);
 
     Object.entries(params).forEach(([key, value]) => requestUrl.searchParams.set(key, value));
     requestUrl.searchParams.set("callback", callbackName);
@@ -101,6 +105,7 @@ function requestJsonp(url, params) {
     };
 
     function cleanup() {
+      window.clearTimeout(timeout);
       script.remove();
       delete window[callbackName];
     }
