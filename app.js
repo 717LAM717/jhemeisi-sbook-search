@@ -20,7 +20,7 @@ searchInput.addEventListener("input", debounce(() => {
   searchBooks(searchInput.value.trim());
 }, 260));
 
-renderEmpty("請輸入關鍵字查詢", "可用書名、條碼，或併在書名欄中的作者文字搜尋。");
+renderEmpty("請輸入關鍵字查詢", "可用書名、條碼或作者搜尋。");
 
 async function searchBooks(query) {
   const requestId = ++activeRequest;
@@ -32,8 +32,8 @@ async function searchBooks(query) {
   }
 
   if (query.length < MIN_QUERY_LENGTH) {
-    renderEmpty("請輸入關鍵字查詢", "可用書名、條碼，或併在書名欄中的作者文字搜尋。");
-    resultSummary.textContent = "準備查詢中";
+    renderEmpty("請輸入關鍵字查詢", "可用書名、條碼或作者搜尋。");
+    resultSummary.textContent = "請輸入關鍵字查詢";
     updatedAt.textContent = "";
     return;
   }
@@ -60,14 +60,15 @@ function renderResults(books, query, lastUpdatedAt) {
     row.innerHTML = `
       <td>${escapeHtml(book.title)}</td>
       <td>${escapeHtml(book.barcode)}</td>
-      <td>${escapeHtml(book.author || "")}</td>
+      <td>${escapeHtml(book.author)}</td>
+      <td>${escapeHtml(book.stock)}</td>
     `;
     resultsBody.appendChild(row);
   });
 
   emptyState.hidden = books.length > 0;
   if (!books.length) {
-    renderEmpty("沒有找到符合的書", "請試試其他書名、作者文字或條碼。");
+    renderEmpty("沒有找到符合的書", "請試試其他書名、條碼或作者。");
   }
 
   resultSummary.textContent = `找到 ${books.length} 本符合「${query}」的書`;

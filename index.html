@@ -15,21 +15,21 @@
         <h1 id="page-title">書籍庫存查詢</h1>
 
         <form class="search-box" id="searchForm">
-          <label for="searchInput">輸入書名、條碼、作者或關鍵字</label>
+          <label for="searchInput">輸入書名、條碼或作者</label>
           <div class="search-row">
             <input
               id="searchInput"
               name="query"
               type="search"
               autocomplete="off"
-              placeholder="例如：978、村上春樹、心理、設計"
+              placeholder="例如：大武山下、龍應台、9789571382647"
             />
             <button type="submit">查詢</button>
           </div>
         </form>
 
         <div class="status-bar">
-          <span id="resultSummary">準備查詢中</span>
+          <span id="resultSummary">請輸入關鍵字查詢</span>
           <span id="updatedAt"></span>
         </div>
       </section>
@@ -42,13 +42,14 @@
                 <th>書名</th>
                 <th>條碼</th>
                 <th>作者</th>
+                <th>庫存</th>
               </tr>
             </thead>
             <tbody id="resultsBody"></tbody>
           </table>
           <div class="empty-state" id="emptyState">
             <strong>請輸入關鍵字查詢</strong>
-            <span>可用書名、條碼，或併在書名欄中的作者文字搜尋。</span>
+            <span>可用書名、條碼或作者搜尋。</span>
           </div>
         </div>
       </section>
