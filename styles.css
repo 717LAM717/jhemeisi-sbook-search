@@ -1,14 +1,18 @@
 :root {
   color-scheme: light;
-  --ink: #202124;
-  --muted: #636a73;
-  --line: #d9dde3;
-  --paper: #fbfaf7;
-  --surface: #ffffff;
-  --accent: #126b63;
-  --accent-dark: #0e514b;
-  --gold: #a57224;
-  --shadow: 0 18px 50px rgba(32, 33, 36, 0.11);
+  --ink: #211f1b;
+  --muted: #716b62;
+  --line: #ded7c8;
+  --paper: #fbf8ef;
+  --surface: rgba(255, 255, 255, 0.94);
+  --accent: #a10f1b;
+  --accent-dark: #760a13;
+  --gold: #b99a53;
+  --gold-soft: #f2df80;
+  --button: #c8ad70;
+  --button-dark: #9b8355;
+  --button-text: #211f1b;
+  --shadow: 0 20px 55px rgba(82, 61, 24, 0.13);
 }
 
 * {
@@ -18,58 +22,111 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f7f2e8 0%, #edf3ef 100%);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(242, 223, 128, 0.44), transparent 30%),
+    linear-gradient(180deg, #fffdf7 0%, #f2ead8 100%);
   color: var(--ink);
   font-family:
     "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-button{
-  background: var(--gold);
-  color: white;
-  border: none;
-  border-radius: 12px;
+button,
+input {
+  font: inherit;
 }
 
-button:hover{
-  background: var(--gold-dark);
+button {
+  border: 0;
+  cursor: pointer;
 }
 
 .app-shell {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 36px 0 48px;
+  padding: 34px 0 48px;
 }
 
 .search-panel,
 .results-panel {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(217, 221, 227, 0.9);
+  background: var(--surface);
+  border: 1px solid rgba(222, 215, 200, 0.95);
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
 
 .search-panel {
-  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+}
+
+.search-panel::after {
+  position: absolute;
+  right: -42px;
+  bottom: -76px;
+  width: 260px;
+  height: 260px;
+  background: url("./assets/logo.jpg") center / contain no-repeat;
+  content: "";
+  opacity: 0.055;
+  pointer-events: none;
+}
+
+.brand-header {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 124px;
+  height: 124px;
+  border: 1px solid rgba(185, 154, 83, 0.45);
+  border-radius: 8px;
+  background: #ffffff;
+  object-fit: contain;
+  padding: 8px;
+  box-shadow: 0 12px 30px rgba(82, 61, 24, 0.12);
+}
+
+.brand-copy {
+  min-width: 0;
 }
 
 .eyebrow {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--gold);
-  font-size: 0.76rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 h1 {
+  display: grid;
+  gap: 6px;
   margin: 0;
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1.08;
   letter-spacing: 0;
 }
 
+h1 span {
+  color: var(--ink);
+  font-size: clamp(1.78rem, 4.2vw, 3.25rem);
+  line-height: 1.1;
+}
+
+h1 strong {
+  color: var(--accent);
+  font-size: clamp(1.28rem, 3vw, 2.1rem);
+  line-height: 1.15;
+}
+
 .search-box {
+  position: relative;
+  z-index: 1;
   margin-top: 28px;
 }
 
@@ -84,40 +141,44 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   margin-top: 10px;
 }
 
 .search-row input {
   width: 100%;
-  min-height: 48px;
+  min-height: 50px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--surface);
+  background: #ffffff;
   color: var(--ink);
-  padding: 0 14px;
+  padding: 0 15px;
 }
 
 .search-row input:focus {
   border-color: var(--accent);
-  outline: 3px solid rgba(18, 107, 99, 0.16);
+  outline: 3px solid rgba(161, 15, 27, 0.14);
 }
 
 .search-row button {
-  min-height: 48px;
-  padding: 0 22px;
+  min-height: 50px;
+  padding: 0 24px;
   border-radius: 8px;
-  background: var(--accent);
-  color: #ffffff;
-  font-weight: 700;
+  background: var(--button);
+  color: var(--button-text);
+  font-weight: 800;
   white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(155, 131, 85, 0.22);
 }
 
 .search-row button:hover {
-  background: var(--accent-dark);
+  background: var(--button-dark);
+  color: #ffffff;
 }
 
 .status-bar {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -145,19 +206,20 @@ table {
 
 th,
 td {
-  padding: 16px 18px;
+  padding: 15px 18px;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
 }
 
 th {
-  background: #f3f6f4;
-  color: #33413e;
-  font-size: 0.88rem;
+  background: #f7efdc;
+  color: #4b4131;
+  font-size: 0.9rem;
 }
 
 td {
+  background: rgba(255, 255, 255, 0.74);
   line-height: 1.45;
 }
 
@@ -183,7 +245,18 @@ td {
   }
 
   .search-panel {
-    padding: 20px;
+    padding: 18px;
+  }
+
+  .brand-header {
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .brand-logo {
+    width: 86px;
+    height: 86px;
+    padding: 6px;
   }
 
   .search-row,
@@ -198,6 +271,6 @@ td {
 
   th,
   td {
-    padding: 13px 12px;
+    padding: 12px 10px;
   }
 }

@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>書籍庫存查詢</title>
+    <title>我本是－哲美系二手書店｜書籍庫存查詢</title>
+    <link rel="icon" type="image/jpeg" href="./assets/logo.jpg" />
+    <link rel="apple-touch-icon" href="./assets/logo.jpg" />
     <link rel="stylesheet" href="./styles.css" />
     <script defer src="./config.js"></script>
     <script defer src="./app.js"></script>
@@ -11,8 +13,16 @@
   <body>
     <main class="app-shell">
       <section class="search-panel" aria-labelledby="page-title">
-        <p class="eyebrow">Book Inventory</p>
-        <h1 id="page-title">書籍庫存查詢</h1>
+        <div class="brand-header">
+          <img class="brand-logo" src="./assets/logo.jpg" alt="我本是－哲美系二手書店標誌" />
+          <div class="brand-copy">
+            <p class="eyebrow">Jhemeisi Secondhand Books</p>
+            <h1 id="page-title">
+              <span>我本是－哲美系二手書店</span>
+              <strong>書籍庫存查詢</strong>
+            </h1>
+          </div>
+        </div>
 
         <form class="search-box" id="searchForm">
           <label for="searchInput">輸入書名、條碼或作者</label>
