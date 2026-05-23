@@ -24,14 +24,15 @@ body {
     "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-button,
-input {
-  font: inherit;
+button{
+  background: var(--gold);
+  color: white;
+  border: none;
+  border-radius: 12px;
 }
 
-button {
-  border: 0;
-  cursor: pointer;
+button:hover{
+  background: var(--gold-dark);
 }
 
 .app-shell {
