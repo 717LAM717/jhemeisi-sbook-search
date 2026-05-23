@@ -1,11 +1,14 @@
-:root{
-  --bg: #F3F1EC;
-  --card: #FAF8F2;
-  --text: #2B2B2B;
-  --subtext: #7A6F63;
-  --gold: #B8A178;
-  --gold-dark: #927B52;
-  --yellow: #E8D35B;
+:root {
+  color-scheme: light;
+  --ink: #202124;
+  --muted: #636a73;
+  --line: #d9dde3;
+  --paper: #fbfaf7;
+  --surface: #ffffff;
+  --accent: #126b63;
+  --accent-dark: #0e514b;
+  --gold: #a57224;
+  --shadow: 0 18px 50px rgba(32, 33, 36, 0.11);
 }
 
 * {
