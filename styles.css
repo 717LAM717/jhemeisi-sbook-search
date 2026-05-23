@@ -76,14 +76,14 @@ button {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 18px;
   align-items: center;
 }
 
 .brand-logo {
-  width: 72px;
-  height: 72px;
+  width: 96px;
+  height: 96px;
   border: 1px solid rgba(185, 154, 83, 0.45);
   border-radius: 8px;
   background: #ffffff;
@@ -114,13 +114,17 @@ h1 {
 
 h1 span {
   color: var(--ink);
+  font-family: "Noto Serif TC", "Noto Sans TC", serif;
   font-size: clamp(1.78rem, 4.2vw, 3.25rem);
+  font-weight: 900;
   line-height: 1.1;
 }
 
 h1 strong {
   color: var(--accent);
+  font-family: "Noto Serif TC", "Noto Sans TC", serif;
   font-size: clamp(1.42rem, 3.36vw, 2.6rem);
+  font-weight: 700;
   line-height: 1.1;
 }
 
@@ -238,6 +242,35 @@ td {
   font-size: 1.08rem;
 }
 
+.site-footer {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 10px 4px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.site-footer strong {
+  color: var(--gold);
+  font-family: "Noto Serif TC", "Noto Sans TC", serif;
+  font-size: clamp(1.08rem, 2.4vw, 1.45rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.site-footer p {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.site-footer span {
+  display: block;
+}
+
 @media (max-width: 760px) {
   .app-shell {
     width: min(100% - 20px, 1120px);
@@ -249,14 +282,14 @@ td {
   }
 
   .brand-header {
-    grid-template-columns: 54px minmax(0, 1fr);
-    gap: 12px;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 13px;
   }
 
   .brand-logo {
-    width: 54px;
-    height: 54px;
-    padding: 4px;
+    width: 72px;
+    height: 72px;
+    padding: 5px;
   }
 
   .search-row,
