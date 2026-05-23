@@ -43,7 +43,9 @@ async function searchBooks(query) {
   try {
     const payload = await requestJsonp(API_URL, { q: query });
     if (requestId !== activeRequest) return;
-    renderResults(payload.books || [], query, payload.updatedAt);
+    const books = payload.books || [];
+    renderResults(books, query, payload.updatedAt);
+    trackSearch(query, books.length);
   } catch (error) {
     if (requestId !== activeRequest) return;
     renderEmpty("查詢暫時失敗", "請稍後再試，或通知店主確認資料來源。");
@@ -113,6 +115,14 @@ function requestJsonp(url, params) {
 
     script.src = requestUrl.toString();
     document.body.appendChild(script);
+  });
+}
+
+function trackSearch(query, resultCount) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", "search", {
+    search_term: query,
+    results_count: resultCount,
   });
 }
 
