@@ -2,8 +2,15 @@ const config = window.BOOK_SEARCH_CONFIG || {};
 const API_URL = config.API_URL || "";
 const MIN_QUERY_LENGTH = Number(config.MIN_QUERY_LENGTH || 1);
 
+const RECENT_TITLE = "最近來到哲美系的書";
+const RECENT_DESCRIPTION = "這裡會顯示近期整理建檔的書籍。若想找特定書名、作者或關鍵字，也可以直接搜尋。";
+const SEARCH_TITLE = "查詢結果";
+const SEARCH_DESCRIPTION = "以下為符合搜尋條件的書籍。";
+
 const searchForm = document.querySelector("#searchForm");
 const searchInput = document.querySelector("#searchInput");
+const listTitle = document.querySelector("#listTitle");
+const listDescription = document.querySelector("#listDescription");
 const resultsBody = document.querySelector("#resultsBody");
 const emptyState = document.querySelector("#emptyState");
 const resultSummary = document.querySelector("#resultSummary");
@@ -13,48 +20,45 @@ let activeRequest = 0;
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  searchBooks(searchInput.value.trim());
+  loadBooks(searchInput.value.trim());
 });
 
 searchInput.addEventListener("input", debounce(() => {
-  searchBooks(searchInput.value.trim());
+  loadBooks(searchInput.value.trim());
 }, 260));
 
-renderEmpty("請輸入關鍵字查詢", "可用書名、條碼或作者搜尋。");
+loadBooks("");
 
-async function searchBooks(query) {
+async function loadBooks(query) {
   const requestId = ++activeRequest;
+  const isSearch = query.length >= MIN_QUERY_LENGTH;
+  setListIntro(isSearch ? SEARCH_TITLE : RECENT_TITLE, isSearch ? SEARCH_DESCRIPTION : RECENT_DESCRIPTION);
 
   if (!isConfigured()) {
     renderEmpty("尚未連線到庫存表", "請先在 config.js 貼上 Apps Script Web app URL。");
     resultSummary.textContent = "尚未設定資料來源";
-    return;
-  }
-
-  if (query.length < MIN_QUERY_LENGTH) {
-    renderEmpty("請輸入關鍵字查詢", "可用書名、條碼或作者搜尋。");
-    resultSummary.textContent = "請輸入關鍵字查詢";
     updatedAt.textContent = "";
     return;
   }
 
-  resultSummary.textContent = "查詢中...";
+  resultSummary.textContent = isSearch ? "查詢中..." : "載入最近書籍中...";
 
   try {
-    const payload = await requestJsonp(API_URL, { q: query });
+    const params = isSearch ? { q: query } : {};
+    const payload = await requestJsonp(API_URL, params);
     if (requestId !== activeRequest) return;
     const books = payload.books || [];
-    renderResults(books, query, payload.updatedAt);
-    trackSearch(query, books.length);
+    renderResults(books, query, payload.updatedAt, isSearch);
+    if (isSearch) trackSearch(query, books.length);
   } catch (error) {
     if (requestId !== activeRequest) return;
-    renderEmpty("查詢暫時失敗", "請稍後再試，或通知店主確認資料來源。");
-    resultSummary.textContent = "查詢失敗";
+    renderEmpty("資料暫時讀取失敗", "請稍後再試，或通知店主確認資料來源。");
+    resultSummary.textContent = "讀取失敗";
     updatedAt.textContent = "";
   }
 }
 
-function renderResults(books, query, lastUpdatedAt) {
+function renderResults(books, query, lastUpdatedAt, isSearch) {
   resultsBody.innerHTML = "";
 
   books.forEach((book) => {
@@ -70,11 +74,21 @@ function renderResults(books, query, lastUpdatedAt) {
 
   emptyState.hidden = books.length > 0;
   if (!books.length) {
-    renderEmpty("沒有找到符合的書", "請試試其他書名、條碼或作者。");
+    renderEmpty(
+      isSearch ? "沒有找到符合的書" : "目前沒有可顯示的新書",
+      isSearch ? "請試試其他書名、條碼或作者。" : "有新書建檔後，會優先顯示在這裡。"
+    );
   }
 
-  resultSummary.textContent = `找到 ${books.length} 本符合「${query}」的書`;
+  resultSummary.textContent = isSearch
+    ? `找到 ${books.length} 本符合「${query}」的書`
+    : `目前顯示最近 ${books.length} 本書`;
   updatedAt.textContent = lastUpdatedAt ? `資料更新：${formatDate(lastUpdatedAt)}` : "";
+}
+
+function setListIntro(title, description) {
+  listTitle.textContent = title;
+  listDescription.textContent = description;
 }
 
 function renderEmpty(title, message) {

@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260523-3" />
+    <link rel="stylesheet" href="./styles.css?v=20260612-2" />
 
     <!-- Google tag (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G9T6ZLVH8P"></script>
@@ -26,7 +26,7 @@
     </script>
 
     <script defer src="./config.js"></script>
-    <script defer src="./app.js"></script>
+    <script defer src="./app.js?v=20260612-1"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -57,12 +57,17 @@
         </form>
 
         <div class="status-bar">
-          <span id="resultSummary">請輸入關鍵字查詢</span>
+          <span id="resultSummary">載入最近書籍中...</span>
           <span id="updatedAt"></span>
         </div>
       </section>
 
       <section class="results-panel" aria-live="polite">
+        <div class="list-intro">
+          <h2 id="listTitle">最近來到哲美系的書</h2>
+          <p id="listDescription">這裡會顯示近期整理建檔的書籍。若想找特定書名、作者或關鍵字，也可以直接搜尋。</p>
+        </div>
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -76,18 +81,27 @@
             <tbody id="resultsBody"></tbody>
           </table>
           <div class="empty-state" id="emptyState">
-            <strong>請輸入關鍵字查詢</strong>
-            <span>可用書名、條碼或作者搜尋。</span>
+            <strong>載入最近書籍中</strong>
+            <span>近期整理建檔的書籍會顯示在這裡。</span>
           </div>
         </div>
       </section>
 
       <footer class="site-footer">
-        <strong>閱讀、流動與再相遇</strong>
-        <p>
-          <span>書籍庫存是流動的，可能因為遇見某個人而離開。</span>
-          <span>若想確認書況或購買，歡迎透過 Facebook、Instagram、Threads 與我們聯繫。</span>
+        <div class="footer-motto">閱讀、流動與再相遇</div>
+        <h2>與我們聯繫</h2>
+        <p class="footer-copy">
+          <span>找到想看的書了嗎？</span>
+          <span>若想確認書況、購買，或詢問收書，歡迎透過社群與我們聯繫。</span>
+          <span>也可以追蹤我們，看看最近來到哲美系的書與日常。</span>
         </p>
+        <nav class="social-links" aria-label="社群連結">
+          <a href="https://www.facebook.com/jhemeisi" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://www.instagram.com/iam_jhemeisi/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.threads.net/@iam_jhemeisi" target="_blank" rel="noopener noreferrer">Threads</a>
+          <a href="https://medium.com/@jhemeisi" target="_blank" rel="noopener noreferrer">Medium</a>
+        </nav>
+        <small>哲美系二手書店｜雲林斗六</small>
       </footer>
     </main>
   </body>
