@@ -27,12 +27,14 @@ searchInput.addEventListener("input", debounce(() => {
   loadBooks(searchInput.value.trim());
 }, 260));
 
+hideEmptyState();
 loadBooks("");
 
 async function loadBooks(query) {
   const requestId = ++activeRequest;
   const isSearch = query.length >= MIN_QUERY_LENGTH;
   setListIntro(isSearch ? SEARCH_TITLE : RECENT_TITLE, isSearch ? SEARCH_DESCRIPTION : RECENT_DESCRIPTION);
+  setLoadingState(isSearch ? "查詢中..." : "載入最近書籍中...");
 
   if (!isConfigured()) {
     renderEmpty("尚未連線到庫存表", "請先在 config.js 貼上 Apps Script Web app URL。");
@@ -40,8 +42,6 @@ async function loadBooks(query) {
     updatedAt.textContent = "";
     return;
   }
-
-  resultSummary.textContent = isSearch ? "查詢中..." : "載入最近書籍中...";
 
   try {
     const params = isSearch ? { q: query } : {};
@@ -58,6 +58,13 @@ async function loadBooks(query) {
   }
 }
 
+function setLoadingState(message) {
+  resultsBody.innerHTML = "";
+  hideEmptyState();
+  resultSummary.textContent = message;
+  updatedAt.textContent = "";
+}
+
 function renderResults(books, query, lastUpdatedAt, isSearch) {
   resultsBody.innerHTML = "";
 
@@ -72,8 +79,9 @@ function renderResults(books, query, lastUpdatedAt, isSearch) {
     resultsBody.appendChild(row);
   });
 
-  emptyState.hidden = books.length > 0;
-  if (!books.length) {
+  if (books.length > 0) {
+    hideEmptyState();
+  } else {
     renderEmpty(
       isSearch ? "沒有找到符合的書" : "目前沒有可顯示的新書",
       isSearch ? "請試試其他書名、條碼或作者。" : "有新書建檔後，會優先顯示在這裡。"
@@ -96,6 +104,10 @@ function renderEmpty(title, message) {
   emptyState.hidden = false;
   emptyState.querySelector("strong").textContent = title;
   emptyState.querySelector("span").textContent = message;
+}
+
+function hideEmptyState() {
+  emptyState.hidden = true;
 }
 
 function requestJsonp(url, params) {
