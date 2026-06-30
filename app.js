@@ -32,8 +32,19 @@ loadBooks("");
 
 async function loadBooks(query) {
   const requestId = ++activeRequest;
-  const isSearch = query.length >= MIN_QUERY_LENGTH;
-  setListIntro(isSearch ? SEARCH_TITLE : RECENT_TITLE, isSearch ? SEARCH_DESCRIPTION : RECENT_DESCRIPTION);
+  const validation = validateQuery(query);
+  const isSearch = validation.type === "search";
+
+  setListIntro(isSearch || validation.type === "invalid" ? SEARCH_TITLE : RECENT_TITLE, isSearch || validation.type === "invalid" ? SEARCH_DESCRIPTION : RECENT_DESCRIPTION);
+
+  if (validation.type === "invalid") {
+    activeRequest += 1;
+    renderEmpty("請輸入完整 13 碼條碼", "條碼搜尋需要輸入完整 13 碼；若要找書名或作者，請輸入文字。");
+    resultSummary.textContent = "請輸入完整 13 碼條碼";
+    updatedAt.textContent = "";
+    return;
+  }
+
   setLoadingState(isSearch ? "查詢中..." : "載入最近書籍中...");
 
   if (!isConfigured()) {
@@ -56,6 +67,21 @@ async function loadBooks(query) {
     resultSummary.textContent = "讀取失敗";
     updatedAt.textContent = "";
   }
+}
+
+function validateQuery(query) {
+  if (!query) return { type: "recent" };
+  const normalized = normalizeNumberText(query);
+  if (/^\d+$/.test(normalized)) {
+    return normalized.length === 13 ? { type: "search" } : { type: "invalid" };
+  }
+  return query.length >= MIN_QUERY_LENGTH ? { type: "search" } : { type: "recent" };
+}
+
+function normalizeNumberText(value) {
+  return String(value || "")
+    .replace(/[！-～]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0xfee0))
+    .replace(/\s+/g, "");
 }
 
 function setLoadingState(message) {
@@ -84,7 +110,7 @@ function renderResults(books, query, lastUpdatedAt, isSearch) {
   } else {
     renderEmpty(
       isSearch ? "沒有找到符合的書" : "目前沒有可顯示的新書",
-      isSearch ? "請試試其他書名、條碼或作者。" : "有新書建檔後，會優先顯示在這裡。"
+      isSearch ? "請試試其他書名、完整條碼或作者。" : "有新書建檔後，會優先顯示在這裡。"
     );
   }
 
