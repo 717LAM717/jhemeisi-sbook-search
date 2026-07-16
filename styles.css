@@ -253,6 +253,58 @@ td {
   line-height: 1.45;
 }
 
+.book-title-cell {
+  min-width: 220px;
+}
+
+.purchase-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.purchase-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid rgba(161, 15, 27, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.94);
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.purchase-links a:hover {
+  border-color: rgba(161, 15, 27, 0.38);
+  background: rgba(247, 239, 220, 0.92);
+  color: var(--accent-dark);
+}
+
+.purchase-unavailable {
+  display: grid;
+  gap: 3px;
+  min-width: 140px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.purchase-unavailable small {
+  color: #8a8378;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .empty-state {
   display: grid;
   gap: 8px;
@@ -430,5 +482,15 @@ td {
 
   .list-intro {
     padding: 18px 16px 2px;
+  }
+
+  .purchase-links {
+    flex-direction: column;
+    min-width: 150px;
+  }
+
+  .purchase-links a {
+    width: 100%;
+    white-space: normal;
   }
 }

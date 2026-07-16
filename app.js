@@ -97,10 +97,11 @@ function renderResults(books, query, lastUpdatedAt, isSearch) {
   books.forEach((book) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${escapeHtml(book.title)}</td>
+      <td class="book-title-cell">${escapeHtml(book.title)}</td>
       <td>${escapeHtml(book.barcode)}</td>
       <td>${escapeHtml(book.author)}</td>
       <td>${escapeHtml(book.stock)}</td>
+      <td>${renderPurchaseCell(book)}</td>
     `;
     resultsBody.appendChild(row);
   });
@@ -118,6 +119,48 @@ function renderResults(books, query, lastUpdatedAt, isSearch) {
     ? `找到 ${books.length} 本符合「${query}」的書`
     : `目前顯示最近 ${books.length} 本書`;
   updatedAt.textContent = lastUpdatedAt ? `資料更新：${formatDate(lastUpdatedAt)}` : "";
+}
+
+function renderPurchaseCell(book) {
+  const links = [
+    {
+      label: "好賣+直接下單",
+      url: book.famiUrl,
+    },
+    {
+      label: "iOPEN MALL直接下單",
+      url: book.iopenUrl,
+    },
+  ].filter((link) => isSafeHttpUrl(link.url));
+
+  if (!links.length) {
+    return `
+      <div class="purchase-unavailable">
+        <span>尚未上架購書平台</span>
+        <small>可透過社群聯繫購買</small>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="purchase-links">
+      ${links.map((link) => `
+        <a href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
+      `).join("")}
+    </div>
+  `;
+}
+
+function isSafeHttpUrl(value) {
+  const text = String(value || "").trim();
+  if (!text) return false;
+
+  try {
+    const url = new URL(text);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 function setListIntro(title, description) {
@@ -194,6 +237,10 @@ function escapeHtml(value) {
   const element = document.createElement("span");
   element.textContent = value || "";
   return element.innerHTML;
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/"/g, "&quot;");
 }
 
 function formatDate(value) {
