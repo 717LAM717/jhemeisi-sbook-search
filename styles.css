@@ -23,6 +23,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -168,7 +172,13 @@ h1 strong {
   outline: 3px solid rgba(161, 15, 27, 0.14);
 }
 
-.search-row button {
+.search-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.search-row button,
+.retry-button {
   min-height: 50px;
   padding: 0 24px;
   border-radius: 8px;
@@ -179,9 +189,37 @@ h1 strong {
   box-shadow: 0 8px 18px rgba(155, 131, 85, 0.22);
 }
 
-.search-row button:hover {
+.search-row button:hover,
+.retry-button:hover {
   background: var(--button-dark);
   color: #ffffff;
+}
+
+.search-row button:focus-visible,
+.retry-button:focus-visible,
+.purchase-links a:focus-visible,
+.social-links a:focus-visible,
+.platform-links a:focus-visible {
+  outline: 3px solid rgba(161, 15, 27, 0.22);
+  outline-offset: 2px;
+}
+
+.search-row button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.search-row .secondary-button {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.search-row .secondary-button:hover {
+  border-color: var(--button-dark);
+  background: #f7efdc;
+  color: var(--ink);
 }
 
 .status-bar {
@@ -196,9 +234,71 @@ h1 strong {
   font-size: 0.92rem;
 }
 
+.book-intake-callout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid rgba(185, 154, 83, 0.44);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(247, 239, 220, 0.96), rgba(255, 253, 247, 0.94));
+}
+
+.book-intake-callout div {
+  display: grid;
+  gap: 4px;
+}
+
+.book-intake-callout strong {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
+}
+
+.book-intake-callout span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.book-intake-callout button {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(118, 10, 19, 0.18);
+}
+
+.book-intake-callout button:hover {
+  background: var(--accent-dark);
+}
+
+.book-intake-callout button:focus-visible,
+.dialog-close:focus-visible,
+.dialog-actions a:focus-visible,
+.dialog-actions button:focus-visible {
+  outline: 3px solid rgba(161, 15, 27, 0.24);
+  outline-offset: 3px;
+}
+
 .results-panel {
   margin-top: 18px;
   overflow: hidden;
+}
+
+.results-panel tbody {
+  transition: opacity 160ms ease;
+}
+
+.results-panel.is-loading tbody {
+  opacity: 0.42;
 }
 
 .list-intro {
@@ -318,6 +418,12 @@ td {
 .empty-state strong {
   color: var(--ink);
   font-size: 1.08rem;
+}
+
+.retry-button {
+  min-height: 42px;
+  margin-top: 6px;
+  padding: 0 18px;
 }
 
 .site-footer {
@@ -444,6 +550,112 @@ td {
   letter-spacing: 0.02em;
 }
 
+.book-intake-dialog {
+  width: min(720px, calc(100% - 28px));
+  max-height: calc(100vh - 28px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(33, 31, 27, 0.32);
+}
+
+.book-intake-dialog::backdrop {
+  background: rgba(33, 31, 27, 0.68);
+  backdrop-filter: blur(3px);
+}
+
+.dialog-header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 248, 239, 0.97);
+}
+
+.dialog-header .eyebrow {
+  margin-bottom: 4px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+}
+
+.dialog-close {
+  display: grid;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.book-intake-dialog > p {
+  margin: 16px 20px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.dialog-image-link {
+  display: block;
+  margin: 0 20px;
+}
+
+.dialog-image-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 20px 20px;
+}
+
+.dialog-actions a,
+.dialog-actions button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.dialog-actions .dialog-primary-action {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.dialog-actions .dialog-primary-action:hover {
+  background: var(--accent-dark);
+}
+
 @media (max-width: 760px) {
   .app-shell {
     width: min(100% - 20px, 1120px);
@@ -475,9 +687,88 @@ td {
     width: 100%;
   }
 
-  th,
+  .search-actions {
+    width: 100%;
+  }
+
+  .search-actions .secondary-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .search-actions #searchButton {
+    flex: 1;
+  }
+
+  .book-intake-callout {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .book-intake-callout button {
+    width: 100%;
+  }
+
+  .table-wrap {
+    padding: 12px;
+    overflow-x: visible;
+  }
+
+  table,
+  tbody,
+  tr,
   td {
-    padding: 12px 10px;
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  tr {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  td {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(222, 215, 200, 0.72);
+    background: transparent;
+  }
+
+  td:last-child {
+    border-bottom: 0;
+  }
+
+  td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .book-title-cell {
+    min-width: 0;
+    background: #f7efdc;
+    font-weight: 700;
   }
 
   .list-intro {
@@ -486,11 +777,27 @@ td {
 
   .purchase-links {
     flex-direction: column;
-    min-width: 150px;
+    min-width: 0;
   }
 
   .purchase-links a {
     width: 100%;
     white-space: normal;
+  }
+
+  .dialog-header {
+    padding: 16px;
+  }
+
+  .book-intake-dialog > p,
+  .dialog-image-link {
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+
+  .dialog-actions {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
   }
 }
