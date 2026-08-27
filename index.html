@@ -3,11 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="查詢我本是－哲美系二手書店目前可購買的書籍庫存。"
-    />
-    <meta name="theme-color" content="#fbf8ef" />
     <title>我本是－哲美系二手書店｜書籍庫存查詢</title>
     <link rel="icon" type="image/jpeg" href="./assets/logo.jpg" />
     <link rel="apple-touch-icon" href="./assets/logo.jpg" />
@@ -17,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260827-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260716-1" />
 
     <!-- Google tag (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G9T6ZLVH8P"></script>
@@ -31,7 +26,7 @@
     </script>
 
     <script defer src="./config.js"></script>
-    <script defer src="./app.js?v=20260827-2"></script>
+    <script defer src="./app.js?v=20260716-1"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -55,12 +50,9 @@
               name="query"
               type="search"
               autocomplete="off"
-              placeholder="例如：幸福建築、艾倫・狄波頓、9789861340814"
+              placeholder="例如：大武山下、龍應台、9789571382647"
             />
-            <div class="search-actions">
-              <button class="secondary-button" id="clearSearch" type="button" hidden>清除</button>
-              <button id="searchButton" type="submit">查詢</button>
-            </div>
+            <button type="submit">查詢</button>
           </div>
         </form>
 
@@ -68,14 +60,6 @@
           <span id="resultSummary">載入最近書籍中...</span>
           <span id="updatedAt"></span>
         </div>
-
-        <aside class="book-intake-callout" aria-labelledby="book-intake-title">
-          <div>
-            <strong id="book-intake-title">家裡有書想整理？</strong>
-            <span>先看看哲美系的收書原則，再決定是否與我們聯繫。</span>
-          </div>
-          <button id="openBookIntake" type="button">我有書要處理</button>
-        </aside>
       </section>
 
       <section class="results-panel" aria-live="polite">
@@ -100,7 +84,6 @@
           <div class="empty-state" id="emptyState" hidden>
             <strong></strong>
             <span></span>
-            <button class="retry-button" id="retryButton" type="button" hidden>重新載入</button>
           </div>
         </div>
       </section>
@@ -134,41 +117,5 @@
         <small>哲美系二手書店｜雲林斗六</small>
       </footer>
     </main>
-
-    <dialog
-      class="book-intake-dialog"
-      id="bookIntakeDialog"
-      aria-labelledby="book-intake-dialog-title"
-      aria-describedby="book-intake-dialog-description"
-    >
-      <div class="dialog-header">
-        <div>
-          <p class="eyebrow">Book Intake Guide</p>
-          <h2 id="book-intake-dialog-title">二手書收購原則</h2>
-        </div>
-        <button class="dialog-close" id="closeBookIntake" type="button" aria-label="關閉收書說明">×</button>
-      </div>
-      <p id="book-intake-dialog-description">
-        請先確認書籍類型與保存狀況。實際是否收購及估價，仍由店主逐本判斷。
-      </p>
-      <a
-        class="dialog-image-link"
-        href="./assets/收書說明_收購原則.png"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="另開原尺寸收書說明圖"
-      >
-        <img src="./assets/收書說明_收購原則.png" alt="哲美系二手書收購原則說明圖" />
-      </a>
-      <div class="dialog-actions">
-        <a
-          class="dialog-primary-action"
-          href="https://www.instagram.com/iam_jhemeisi/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >前往 Instagram 詢問</a>
-        <button id="closeBookIntakeBottom" type="button">先關閉</button>
-      </div>
-    </dialog>
   </body>
 </html>

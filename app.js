@@ -6,78 +6,32 @@ const RECENT_TITLE = "最近來到哲美系的書";
 const RECENT_DESCRIPTION = "這裡會顯示近期整理建檔的書籍。若想找特定書名、作者或關鍵字，也可以直接搜尋。";
 const SEARCH_TITLE = "查詢結果";
 const SEARCH_DESCRIPTION = "以下為符合搜尋條件的書籍。";
-const FALLBACK_SEARCH_EXAMPLE = "例如：幸福建築、艾倫・狄波頓、9789861340814";
 
 const searchForm = document.querySelector("#searchForm");
 const searchInput = document.querySelector("#searchInput");
-const searchButton = document.querySelector("#searchButton");
-const clearSearchButton = document.querySelector("#clearSearch");
-const retryButton = document.querySelector("#retryButton");
 const listTitle = document.querySelector("#listTitle");
 const listDescription = document.querySelector("#listDescription");
 const resultsBody = document.querySelector("#resultsBody");
 const emptyState = document.querySelector("#emptyState");
 const resultSummary = document.querySelector("#resultSummary");
 const updatedAt = document.querySelector("#updatedAt");
-const resultsPanel = document.querySelector(".results-panel");
-const openBookIntakeButton = document.querySelector("#openBookIntake");
-const bookIntakeDialog = document.querySelector("#bookIntakeDialog");
-const closeBookIntakeButtons = [
-  document.querySelector("#closeBookIntake"),
-  document.querySelector("#closeBookIntakeBottom"),
-];
 
 let activeRequest = 0;
-let lastAttemptedQuery = "";
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  loadBooks(searchInput.value.trim(), { historyMode: "push" });
+  loadBooks(searchInput.value.trim());
 });
 
 searchInput.addEventListener("input", debounce(() => {
-  updateClearButton();
-  loadBooks(searchInput.value.trim(), { historyMode: "replace" });
+  loadBooks(searchInput.value.trim());
 }, 260));
 
-clearSearchButton.addEventListener("click", () => {
-  searchInput.value = "";
-  updateClearButton();
-  loadBooks("", { historyMode: "push" });
-  searchInput.focus();
-});
-
-retryButton.addEventListener("click", () => {
-  loadBooks(lastAttemptedQuery, { historyMode: "none" });
-});
-
-openBookIntakeButton.addEventListener("click", openBookIntakeDialog);
-closeBookIntakeButtons.forEach((button) => {
-  button.addEventListener("click", closeBookIntakeDialog);
-});
-
-bookIntakeDialog.addEventListener("click", (event) => {
-  if (event.target === bookIntakeDialog) closeBookIntakeDialog();
-});
-
-window.addEventListener("popstate", () => {
-  const query = getQueryFromUrl();
-  searchInput.value = query;
-  updateClearButton();
-  loadBooks(query, { historyMode: "none" });
-});
-
 hideEmptyState();
-searchInput.value = getQueryFromUrl();
-updateClearButton();
-loadBooks(searchInput.value.trim(), { historyMode: "replace" });
+loadBooks("");
 
-async function loadBooks(query, options = {}) {
+async function loadBooks(query) {
   const requestId = ++activeRequest;
-  const historyMode = options.historyMode || "none";
-  lastAttemptedQuery = query;
-  syncQueryToUrl(query, historyMode);
-
   const validation = validateQuery(query);
   const isSearch = validation.type === "search";
 
@@ -88,7 +42,6 @@ async function loadBooks(query, options = {}) {
     renderEmpty("請輸入完整 13 碼條碼", "條碼搜尋需要輸入完整 13 碼；若要找書名或作者，請輸入文字。");
     resultSummary.textContent = "請輸入完整 13 碼條碼";
     updatedAt.textContent = "";
-    setBusy(false);
     return;
   }
 
@@ -98,7 +51,6 @@ async function loadBooks(query, options = {}) {
     renderEmpty("尚未連線到庫存表", "請先在 config.js 貼上 Apps Script Web app URL。");
     resultSummary.textContent = "尚未設定資料來源";
     updatedAt.textContent = "";
-    setBusy(false);
     return;
   }
 
@@ -106,19 +58,14 @@ async function loadBooks(query, options = {}) {
     const params = isSearch ? { q: query } : {};
     const payload = await requestJsonp(API_URL, params);
     if (requestId !== activeRequest) return;
-    if (!payload || !Array.isArray(payload.books)) {
-      throw new Error("Unexpected API response");
-    }
-    const books = payload.books;
+    const books = payload.books || [];
     renderResults(books, query, payload.updatedAt, isSearch);
     if (isSearch) trackSearch(query, books.length);
   } catch (error) {
     if (requestId !== activeRequest) return;
-    renderEmpty("資料暫時讀取失敗", "請稍後再試，或通知店主確認資料來源。", true);
+    renderEmpty("資料暫時讀取失敗", "請稍後再試，或通知店主確認資料來源。");
     resultSummary.textContent = "讀取失敗";
     updatedAt.textContent = "";
-  } finally {
-    if (requestId === activeRequest) setBusy(false);
   }
 }
 
@@ -138,31 +85,26 @@ function normalizeNumberText(value) {
 }
 
 function setLoadingState(message) {
+  resultsBody.innerHTML = "";
   hideEmptyState();
   resultSummary.textContent = message;
   updatedAt.textContent = "";
-  setBusy(true);
 }
 
 function renderResults(books, query, lastUpdatedAt, isSearch) {
   resultsBody.innerHTML = "";
 
-  const fragment = document.createDocumentFragment();
-
-  books.forEach((rawBook) => {
-    const book = rawBook && typeof rawBook === "object" ? rawBook : {};
+  books.forEach((book) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td class="book-title-cell" data-label="書名">${escapeHtml(book.title)}</td>
-      <td data-label="條碼">${escapeHtml(book.barcode)}</td>
-      <td data-label="作者">${escapeHtml(book.author)}</td>
-      <td data-label="庫存">${escapeHtml(book.stock)}</td>
-      <td data-label="購買">${renderPurchaseCell(book)}</td>
+      <td class="book-title-cell">${escapeHtml(book.title)}</td>
+      <td>${escapeHtml(book.barcode)}</td>
+      <td>${escapeHtml(book.author)}</td>
+      <td>${escapeHtml(book.stock)}</td>
+      <td>${renderPurchaseCell(book)}</td>
     `;
-    fragment.appendChild(row);
+    resultsBody.appendChild(row);
   });
-
-  resultsBody.appendChild(fragment);
 
   if (books.length > 0) {
     hideEmptyState();
@@ -177,41 +119,6 @@ function renderResults(books, query, lastUpdatedAt, isSearch) {
     ? `找到 ${books.length} 本符合「${query}」的書`
     : `目前顯示最近 ${books.length} 本書`;
   updatedAt.textContent = lastUpdatedAt ? `資料更新：${formatDate(lastUpdatedAt)}` : "";
-  if (!isSearch) updateSearchExample(books);
-}
-
-function updateSearchExample(books) {
-  const candidates = books.filter((book) => {
-    const title = String((book && book.title) || "").trim();
-    return title && title.length <= 18;
-  });
-
-  if (!candidates.length) {
-    searchInput.placeholder = FALLBACK_SEARCH_EXAMPLE;
-    return;
-  }
-
-  const book = candidates[Math.floor(Math.random() * candidates.length)];
-  const parts = [book.title, book.author, book.barcode]
-    .map((value) => String(value || "").trim())
-    .filter(Boolean);
-  searchInput.placeholder = `例如：${parts.join("、")}`;
-}
-
-function openBookIntakeDialog() {
-  if (typeof bookIntakeDialog.showModal === "function") {
-    bookIntakeDialog.showModal();
-  } else {
-    bookIntakeDialog.setAttribute("open", "");
-  }
-}
-
-function closeBookIntakeDialog() {
-  if (typeof bookIntakeDialog.close === "function") {
-    bookIntakeDialog.close();
-  } else {
-    bookIntakeDialog.removeAttribute("open");
-  }
 }
 
 function renderPurchaseCell(book) {
@@ -261,52 +168,15 @@ function setListIntro(title, description) {
   listDescription.textContent = description;
 }
 
-function renderEmpty(title, message, showRetry = false) {
+function renderEmpty(title, message) {
   resultsBody.innerHTML = "";
   emptyState.hidden = false;
   emptyState.querySelector("strong").textContent = title;
   emptyState.querySelector("span").textContent = message;
-  retryButton.hidden = !showRetry;
 }
 
 function hideEmptyState() {
   emptyState.hidden = true;
-  retryButton.hidden = true;
-}
-
-function setBusy(isBusy) {
-  resultsPanel.setAttribute("aria-busy", String(isBusy));
-  resultsPanel.classList.toggle("is-loading", isBusy);
-  searchButton.disabled = isBusy;
-  searchButton.textContent = isBusy ? "查詢中…" : "查詢";
-}
-
-function updateClearButton() {
-  clearSearchButton.hidden = !searchInput.value.trim();
-}
-
-function getQueryFromUrl() {
-  try {
-    return new URL(window.location.href).searchParams.get("q") || "";
-  } catch {
-    return "";
-  }
-}
-
-function syncQueryToUrl(query, historyMode) {
-  if (historyMode !== "push" && historyMode !== "replace") return;
-
-  try {
-    const url = new URL(window.location.href);
-    if (query) url.searchParams.set("q", query);
-    else url.searchParams.delete("q");
-
-    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
-    const method = historyMode === "push" ? "pushState" : "replaceState";
-    window.history[method]({ query }, "", nextUrl);
-  } catch {
-    // URL 同步失敗時仍保留查詢功能。
-  }
 }
 
 function requestJsonp(url, params) {
@@ -365,7 +235,7 @@ function debounce(callback, delay) {
 
 function escapeHtml(value) {
   const element = document.createElement("span");
-  element.textContent = String(value ?? "");
+  element.textContent = value || "";
   return element.innerHTML;
 }
 
@@ -374,11 +244,8 @@ function escapeAttribute(value) {
 }
 
 function formatDate(value) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-
   return new Intl.DateTimeFormat("zh-Hant-TW", {
     dateStyle: "medium",
     timeStyle: "short",
-  }).format(date);
+  }).format(new Date(value));
 }
