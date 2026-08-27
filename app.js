@@ -10,6 +10,7 @@ const DIRECT_TITLE = "可直接下單的書";
 const DIRECT_DESCRIPTION = "以下為總庫存中已有購書平台連結、可直接前往下單的書籍。";
 const FALLBACK_SEARCH_EXAMPLE = "例如：幸福建築、艾倫・狄波頓、9789861340814";
 const RECENT_INITIAL_LIMIT = 12;
+const INSTAGRAM_URL = "https://www.instagram.com/iam_jhemeisi/";
 
 const searchForm = document.querySelector("#searchForm");
 const searchInput = document.querySelector("#searchInput");
@@ -320,7 +321,15 @@ function renderPurchaseCell(book) {
   ].filter((link) => isSafeHttpUrl(link.url));
 
   if (!links.length) {
-    return `<span class="purchase-unavailable">可私訊詢問</span>`;
+    return `
+      <a
+        class="purchase-inquiry-link"
+        href="${escapeAttribute(INSTAGRAM_URL)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="前往哲美系 Instagram 私訊詢問"
+      >Instagram 私訊詢問</a>
+    `;
   }
 
   return `

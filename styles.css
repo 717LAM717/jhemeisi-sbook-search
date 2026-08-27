@@ -268,16 +268,19 @@ h1 strong {
 .book-intake-callout button {
   min-height: 44px;
   padding: 0 18px;
+  border: 1px solid var(--gold);
   border-radius: 999px;
-  background: var(--accent);
-  color: #ffffff;
+  background: #fffdf7;
+  color: #4b4131;
   font-weight: 800;
   white-space: nowrap;
-  box-shadow: 0 8px 18px rgba(118, 10, 19, 0.18);
+  box-shadow: none;
 }
 
 .book-intake-callout button:hover {
-  background: var(--accent-dark);
+  border-color: var(--button-dark);
+  background: #f7efdc;
+  color: var(--ink);
 }
 
 .book-intake-callout button:focus-visible,
@@ -440,10 +443,25 @@ td {
   color: #ffffff;
 }
 
-.purchase-unavailable {
-  color: #817a70;
+.purchase-inquiry-link {
+  color: #6f665a;
   font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(111, 102, 90, 0.42);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   white-space: nowrap;
+}
+
+.purchase-inquiry-link:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+.purchase-inquiry-link:focus-visible {
+  outline: 3px solid rgba(161, 15, 27, 0.22);
+  outline-offset: 3px;
 }
 
 .results-footer-controls {
