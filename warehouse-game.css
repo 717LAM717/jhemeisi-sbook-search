@@ -1,0 +1,712 @@
+.warehouse-game {
+  --warehouse-ink: #21160f;
+  --warehouse-cream: #fff3c4;
+  --warehouse-red: #8f1019;
+  --warehouse-red-dark: #5d0710;
+  --warehouse-gold: #d7b45f;
+  --warehouse-gold-bright: #ffe99a;
+  position: relative;
+  isolation: isolate;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid #5c100f;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% -15%, rgba(255, 233, 154, 0.34), transparent 42%),
+    linear-gradient(145deg, #4d0b0e 0%, #260709 62%, #150505 100%);
+  color: #fff9df;
+  box-shadow:
+    0 24px 65px rgba(49, 8, 9, 0.28),
+    inset 0 0 0 5px rgba(215, 180, 95, 0.13);
+  padding: 38px clamp(18px, 4vw, 44px) 42px;
+}
+
+.warehouse-game::before {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 8px),
+    linear-gradient(90deg, transparent, rgba(255, 233, 154, 0.045), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.warehouse-game__lights {
+  position: absolute;
+  z-index: -1;
+  inset: 10px;
+  border: 1px solid rgba(215, 180, 95, 0.42);
+  border-radius: 9px;
+  pointer-events: none;
+}
+
+.warehouse-game__lights::before,
+.warehouse-game__lights::after {
+  position: absolute;
+  right: 18px;
+  left: 18px;
+  height: 8px;
+  background: radial-gradient(circle, var(--warehouse-gold-bright) 0 2px, transparent 3px) 0 0 / 28px 8px repeat-x;
+  content: "";
+  filter: drop-shadow(0 0 5px rgba(255, 233, 154, 0.72));
+  opacity: 0.82;
+}
+
+.warehouse-game__lights::before {
+  top: -5px;
+}
+
+.warehouse-game__lights::after {
+  bottom: -5px;
+}
+
+.warehouse-game__header {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.warehouse-game__kicker,
+.warehouse-game__result-kicker {
+  margin: 0 0 7px;
+  color: var(--warehouse-gold-bright);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.warehouse-game__header h2 {
+  margin: 0;
+  color: #fff8d9;
+  font-family: var(--font-serif);
+  font-size: clamp(2.15rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-shadow:
+    0 2px 0 #4f070c,
+    0 0 22px rgba(255, 233, 154, 0.2);
+}
+
+.warehouse-game__header > p:last-child {
+  margin: 14px auto 0;
+  color: rgba(255, 249, 223, 0.76);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.warehouse-game__machine {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 233, 154, 0.72);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(215, 180, 95, 0.98), rgba(135, 92, 29, 0.98)) padding-box,
+    linear-gradient(180deg, #fff2b4, #6b3e13) border-box;
+  padding: 14px;
+  box-shadow:
+    0 17px 35px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52),
+    inset 0 -4px 0 rgba(75, 41, 12, 0.5);
+}
+
+.warehouse-game__machine::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(69, 36, 8, 0.42);
+  border-radius: 7px;
+  content: "";
+  pointer-events: none;
+}
+
+.warehouse-game__reels {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  border: 1px solid rgba(49, 25, 6, 0.72);
+  border-radius: 8px;
+  background: #2c1508;
+  padding: 12px;
+  box-shadow:
+    inset 0 8px 15px rgba(0, 0, 0, 0.48),
+    0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.warehouse-reel {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.warehouse-reel__number {
+  color: rgba(255, 243, 196, 0.7);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-align: center;
+}
+
+.warehouse-reel__window {
+  position: relative;
+  display: grid;
+  min-height: 112px;
+  overflow: hidden;
+  place-items: center;
+  border: 2px solid rgba(80, 47, 14, 0.58);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(77, 54, 23, 0.12), transparent 16%, transparent 84%, rgba(77, 54, 23, 0.15)),
+    repeating-linear-gradient(0deg, rgba(122, 91, 35, 0.035) 0 1px, transparent 1px 4px),
+    #fff6d7;
+  box-shadow:
+    inset 0 8px 15px rgba(63, 42, 13, 0.18),
+    inset 0 -8px 15px rgba(63, 42, 13, 0.14);
+}
+
+.warehouse-reel__window::before,
+.warehouse-reel__window::after {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: rgba(96, 57, 15, 0.17);
+  content: "";
+  pointer-events: none;
+}
+
+.warehouse-reel__window::before {
+  top: 33%;
+}
+
+.warehouse-reel__window::after {
+  bottom: 33%;
+}
+
+.warehouse-reel input {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 22px);
+  min-height: 62px;
+  border: 0;
+  border-bottom: 2px solid rgba(143, 16, 25, 0.22);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--warehouse-ink);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.7vw, 1.75rem);
+  font-weight: 900;
+  text-align: center;
+  transition: opacity 120ms ease;
+}
+
+.warehouse-reel input::placeholder {
+  color: rgba(76, 57, 35, 0.46);
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 1.7vw, 0.96rem);
+  font-weight: 500;
+}
+
+.warehouse-reel input:focus {
+  border-bottom-color: var(--warehouse-red);
+  box-shadow: 0 5px 0 -3px rgba(143, 16, 25, 0.22);
+}
+
+.warehouse-reel__motion {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  inset: 0;
+  place-items: center;
+  color: var(--warehouse-ink);
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3vw, 1.85rem);
+  font-weight: 900;
+  opacity: 0;
+  transform: translateY(-60%);
+  pointer-events: none;
+}
+
+.warehouse-game.is-spinning .warehouse-reel input {
+  opacity: 0;
+}
+
+.warehouse-game.is-spinning .warehouse-reel__motion {
+  opacity: 1;
+  animation: warehouse-reel-roll 170ms linear infinite;
+}
+
+.warehouse-game.is-spinning .warehouse-reel.is-stopped .warehouse-reel__motion {
+  animation: warehouse-reel-stop 280ms cubic-bezier(0.2, 0.9, 0.24, 1.35) both;
+}
+
+.warehouse-game__controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 9px 7px;
+}
+
+.warehouse-game__hint {
+  margin: 0;
+  color: rgba(47, 25, 7, 0.8);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.warehouse-game__spin {
+  position: relative;
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 21px 0 25px;
+  border: 2px solid #53070e;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #bd1c29, var(--warehouse-red));
+  color: #fff9df;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  box-shadow:
+    0 5px 0 var(--warehouse-red-dark),
+    0 9px 16px rgba(71, 8, 12, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.warehouse-game__spin:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.warehouse-game__spin:active {
+  box-shadow:
+    0 2px 0 var(--warehouse-red-dark),
+    0 5px 10px rgba(71, 8, 12, 0.26);
+  transform: translateY(3px);
+}
+
+.warehouse-game__spin:focus-visible,
+.warehouse-game__handle:focus-visible,
+.warehouse-game__result-header button:focus-visible,
+.warehouse-book-card a:focus-visible {
+  outline: 3px solid var(--warehouse-gold-bright);
+  outline-offset: 3px;
+}
+
+.warehouse-game__spin:disabled {
+  cursor: wait;
+  filter: saturate(0.58);
+  opacity: 0.82;
+}
+
+.warehouse-game__handle {
+  position: absolute;
+  top: 50%;
+  right: -68px;
+  width: 66px;
+  height: 154px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  transform: translateY(-50%);
+  transform-origin: 50% 78%;
+}
+
+.warehouse-game__handle-arm {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  width: 42px;
+  height: 116px;
+  transform: translateX(-50%);
+  transform-origin: 50% calc(100% - 5px);
+  transition: transform 180ms ease;
+}
+
+.warehouse-game__handle-shaft {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 11px;
+  height: 94px;
+  border: 2px solid #6c4319;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8c5d26, #ffe6a0 46%, #a26b2e 75%);
+  box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.34);
+  transform: translateX(-50%);
+}
+
+.warehouse-game__handle-knob {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #53070e;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #ed5660 0 12%, #b71c29 34%, #790b14 76%);
+  box-shadow:
+    0 7px 12px rgba(0, 0, 0, 0.34),
+    inset 0 -5px 7px rgba(63, 4, 9, 0.42),
+    inset 0 3px 4px rgba(255, 255, 255, 0.24);
+  transform: translateX(-50%);
+}
+
+.warehouse-game__handle-pivot {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  border: 3px solid #5f3713;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff0b8 0 16%, #c8943e 19% 53%, #6c3c12 57%);
+  box-shadow:
+    0 5px 11px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.4);
+  transform: translateX(-50%);
+}
+
+.warehouse-game__handle:hover .warehouse-game__handle-knob {
+  filter: brightness(1.14);
+}
+
+.warehouse-game__handle:active .warehouse-game__handle-arm {
+  transform: translateX(-50%) rotate(18deg);
+}
+
+.warehouse-game__handle:disabled {
+  cursor: wait;
+}
+
+.warehouse-game.is-spinning .warehouse-game__handle-arm {
+  animation: warehouse-handle-pull 920ms cubic-bezier(0.2, 0.82, 0.25, 1) both;
+}
+
+.warehouse-game__status {
+  min-height: 24px;
+  margin: 18px auto 0;
+  color: rgba(255, 249, 223, 0.74);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.warehouse-game__status.is-error {
+  color: #ffc5c9;
+}
+
+.warehouse-game__result {
+  max-width: 960px;
+  margin: 28px auto 0;
+  border-top: 1px solid rgba(255, 233, 154, 0.26);
+  padding-top: 26px;
+}
+
+.warehouse-game__result-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.warehouse-game__result-header h3 {
+  margin: 0;
+  color: #fff9df;
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+}
+
+.warehouse-game__result-header button {
+  min-height: 42px;
+  padding: 7px 17px;
+  border: 1px solid rgba(255, 233, 154, 0.54);
+  border-radius: 999px;
+  background: rgba(255, 249, 223, 0.08);
+  color: var(--warehouse-gold-bright);
+  font-weight: 800;
+}
+
+.warehouse-game__result-header button:hover {
+  background: rgba(255, 249, 223, 0.15);
+}
+
+.warehouse-game__books {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.warehouse-book-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 245px;
+  flex-direction: column;
+  border: 1px solid rgba(215, 180, 95, 0.58);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent 12%),
+    #fff8df;
+  color: var(--warehouse-ink);
+  padding: 21px 18px 18px;
+  box-shadow:
+    0 11px 25px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 4px rgba(215, 180, 95, 0.12);
+  animation: warehouse-card-deal 420ms both;
+}
+
+.warehouse-book-card:nth-child(2) {
+  animation-delay: 110ms;
+}
+
+.warehouse-book-card:nth-child(3) {
+  animation-delay: 220ms;
+}
+
+.warehouse-book-card__number {
+  margin-bottom: 14px;
+  color: var(--warehouse-red);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.warehouse-book-card h4 {
+  margin: 0;
+  color: #24170e;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.warehouse-book-card__author {
+  margin: 7px 0 0;
+  color: #776952;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.warehouse-book-card__reason {
+  flex: 1;
+  margin: 17px 0;
+  border-top: 1px solid rgba(143, 16, 25, 0.16);
+  color: #574a39;
+  padding-top: 14px;
+  font-size: 0.91rem;
+  line-height: 1.75;
+}
+
+.warehouse-book-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.warehouse-book-card__links a {
+  display: inline-flex;
+  min-height: 35px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 1px solid var(--warehouse-red);
+  border-radius: 999px;
+  background: var(--warehouse-red);
+  color: #ffffff;
+  font-size: 0.81rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.warehouse-book-card__links a.is-inquiry {
+  border-color: rgba(87, 74, 57, 0.32);
+  background: transparent;
+  color: #574a39;
+}
+
+@keyframes warehouse-reel-roll {
+  0% {
+    filter: blur(0);
+    transform: translateY(-58%);
+  }
+  50% {
+    filter: blur(1.5px);
+    transform: translateY(0);
+  }
+  100% {
+    filter: blur(0);
+    transform: translateY(58%);
+  }
+}
+
+@keyframes warehouse-reel-stop {
+  0% {
+    filter: blur(1px);
+    transform: translateY(-34%);
+  }
+  72% {
+    filter: blur(0);
+    transform: translateY(7%);
+  }
+  100% {
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes warehouse-handle-pull {
+  0% {
+    transform: translateX(-50%) rotate(0);
+  }
+  36% {
+    transform: translateX(-50%) rotate(58deg);
+  }
+  62% {
+    transform: translateX(-50%) rotate(51deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(0);
+  }
+}
+
+@keyframes warehouse-card-deal {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-0.7deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .warehouse-game {
+    padding: 32px 16px 34px;
+  }
+
+  .warehouse-game__header {
+    margin-bottom: 22px;
+    padding: 0 6px;
+  }
+
+  .warehouse-game__header h2 {
+    font-size: 2.5rem;
+  }
+
+  .warehouse-game__machine {
+    padding: 10px;
+  }
+
+  .warehouse-game__reels {
+    gap: 6px;
+    padding: 8px 6px;
+  }
+
+  .warehouse-reel__window {
+    min-height: 96px;
+  }
+
+  .warehouse-reel input {
+    width: calc(100% - 10px);
+    min-height: 54px;
+    font-size: 1.03rem;
+  }
+
+  .warehouse-reel input::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .warehouse-reel__motion {
+    font-size: 1.05rem;
+  }
+
+  .warehouse-game__controls,
+  .warehouse-game__result-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .warehouse-game__controls {
+    gap: 12px;
+    padding-right: 56px;
+    padding-top: 14px;
+  }
+
+  .warehouse-game__hint {
+    text-align: center;
+  }
+
+  .warehouse-game__spin,
+  .warehouse-game__result-header button {
+    width: 100%;
+  }
+
+  .warehouse-game__handle {
+    top: auto;
+    right: 5px;
+    bottom: 7px;
+    width: 50px;
+    height: 86px;
+    transform: none;
+  }
+
+  .warehouse-game__handle-arm {
+    bottom: 19px;
+    width: 34px;
+    height: 65px;
+  }
+
+  .warehouse-game__handle-shaft {
+    width: 9px;
+    height: 49px;
+  }
+
+  .warehouse-game__handle-knob {
+    width: 31px;
+    height: 31px;
+  }
+
+  .warehouse-game__handle-pivot {
+    bottom: 2px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .warehouse-game__books {
+    grid-template-columns: 1fr;
+  }
+
+  .warehouse-book-card {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .warehouse-game *,
+  .warehouse-game *::before,
+  .warehouse-game *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

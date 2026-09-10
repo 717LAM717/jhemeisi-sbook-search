@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="輸入三個自由關鍵字，讓哲美系從目前有庫存的書中挖出意外相遇。"
+    />
+    <meta name="theme-color" content="#260709" />
+    <title>挖倉庫｜我本是－哲美系二手書店</title>
+    <link rel="icon" type="image/jpeg" href="./assets/logo.jpg" />
+    <link rel="apple-touch-icon" href="./assets/logo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260902-1" />
+    <link rel="stylesheet" href="./warehouse-game.css?v=20260902-2" />
+    <link rel="stylesheet" href="./warehouse-page.css?v=20260902-2" />
+
+    <!-- Google tag (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G9T6ZLVH8P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-G9T6ZLVH8P");
+    </script>
+
+    <script defer src="./config.js?v=20260902-1"></script>
+    <script defer src="./warehouse-game.js?v=20260902-2"></script>
+  </head>
+  <body class="warehouse-page-body">
+    <main class="warehouse-page">
+      <nav class="warehouse-page__nav" aria-label="頁面導覽">
+        <a class="warehouse-page__brand" href="./index.html">
+          <img src="./assets/logo.jpg" alt="" />
+          <span>
+            <small>我本是－哲美系二手書店</small>
+            <strong>書庫裡的意外相遇</strong>
+          </span>
+        </a>
+        <a class="warehouse-page__back" href="./index.html">回到庫存查詢</a>
+      </nav>
+
+      <section class="warehouse-game" id="warehouseGame" aria-labelledby="warehouseGameTitle">
+        <div class="warehouse-game__lights" aria-hidden="true"></div>
+        <header class="warehouse-game__header">
+          <p class="warehouse-game__kicker">Dig the Warehouse</p>
+          <h1 id="warehouseGameTitle">挖倉庫</h1>
+          <p>給系主任三個詞。不是精準推薦，是看看今天會從書庫深處翻出什麼。</p>
+        </header>
+
+        <form class="warehouse-game__machine" id="warehouseGameForm" novalidate>
+          <div class="warehouse-game__reels" aria-label="輸入三個關鍵字">
+            <label class="warehouse-reel">
+              <span class="warehouse-reel__number">01</span>
+              <span class="warehouse-reel__window">
+                <input
+                  id="warehouseWord1"
+                  name="word1"
+                  type="text"
+                  aria-label="第一個關鍵字"
+                  maxlength="24"
+                  autocomplete="off"
+                  placeholder="例如：貓"
+                  required
+                />
+                <span class="warehouse-reel__motion" aria-hidden="true">宇宙</span>
+              </span>
+            </label>
+            <label class="warehouse-reel">
+              <span class="warehouse-reel__number">02</span>
+              <span class="warehouse-reel__window">
+                <input
+                  id="warehouseWord2"
+                  name="word2"
+                  type="text"
+                  aria-label="第二個關鍵字"
+                  maxlength="24"
+                  autocomplete="off"
+                  placeholder="例如：宇宙"
+                  required
+                />
+                <span class="warehouse-reel__motion" aria-hidden="true">失業</span>
+              </span>
+            </label>
+            <label class="warehouse-reel">
+              <span class="warehouse-reel__number">03</span>
+              <span class="warehouse-reel__window">
+                <input
+                  id="warehouseWord3"
+                  name="word3"
+                  type="text"
+                  aria-label="第三個關鍵字"
+                  maxlength="24"
+                  autocomplete="off"
+                  placeholder="例如：失業"
+                  required
+                />
+                <span class="warehouse-reel__motion" aria-hidden="true">貓</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="warehouse-game__controls">
+            <p class="warehouse-game__hint">每格一個詞，可以很正經，也可以完全亂來。</p>
+            <button class="warehouse-game__spin" id="warehouseSpinButton" type="submit">
+              <span>系主任，你說了算</span>
+            </button>
+          </div>
+
+          <button
+            class="warehouse-game__handle"
+            id="warehouseHandleButton"
+            type="submit"
+            aria-label="拉下把手，開始挖倉庫"
+          >
+            <span class="warehouse-game__handle-arm" aria-hidden="true">
+              <span class="warehouse-game__handle-knob"></span>
+              <span class="warehouse-game__handle-shaft"></span>
+            </span>
+            <span class="warehouse-game__handle-pivot" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <div class="warehouse-game__status" id="warehouseGameStatus" aria-live="polite">
+          三個詞就位後，按下拉霸。
+        </div>
+
+        <section class="warehouse-game__result" id="warehouseGameResult" aria-labelledby="warehouseResultTitle" hidden>
+          <div class="warehouse-game__result-header">
+            <div>
+              <p class="warehouse-game__result-kicker">Warehouse says</p>
+              <h2 id="warehouseResultTitle">這次挖到的書</h2>
+            </div>
+            <button id="warehouseSpinAgain" type="button">不服，再挖一次</button>
+          </div>
+          <div class="warehouse-game__books" id="warehouseGameBooks"></div>
+        </section>
+      </section>
+
+      <footer class="warehouse-page__footer">
+        <p>挖到喜歡的書，就回到庫存查詢繼續逛逛。</p>
+        <a href="./index.html">回到哲美系書籍庫存查詢</a>
+      </footer>
+    </main>
+  </body>
+</html>
