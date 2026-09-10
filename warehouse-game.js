@@ -89,10 +89,9 @@
       renderWarehouseBooks(payload.books.slice(0, 3));
       result.hidden = false;
 
-      const sourceMessage = payload.source === "ai"
-        ? `系主任從候選書裡挑出了 ${Math.min(payload.books.length, 3)} 本。`
-        : `系主任今天暫時請假，書庫自己搖出了 ${Math.min(payload.books.length, 3)} 本。`;
-      setWarehouseStatus(payload.notice ? `${sourceMessage} ${payload.notice}` : sourceMessage);
+      const sourceMessage = `書庫轉了幾圈，替你挖出了 ${Math.min(payload.books.length, 3)} 本。`;
+      const publicNotice = payload.source === "ai" ? String(payload.notice || "").trim() : "";
+      setWarehouseStatus(publicNotice ? `${sourceMessage} ${publicNotice}` : sourceMessage);
       trackWarehouseDig(payload.books.length, payload.source || "unknown");
       result.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "nearest" });
     } catch (error) {
