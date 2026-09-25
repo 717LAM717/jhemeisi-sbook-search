@@ -17,8 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260902-1" />
-    <link rel="stylesheet" href="./warehouse-page.css?v=20260902-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260925-1" />
 
     <!-- Google tag (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G9T6ZLVH8P"></script>
@@ -31,8 +30,8 @@
       gtag("config", "G-G9T6ZLVH8P");
     </script>
 
-    <script defer src="./config.js?v=20260902-1"></script>
-    <script defer src="./app.js?v=20260902-1"></script>
+    <script defer src="./config.js?v=20260925-1"></script>
+    <script defer src="./app.js?v=20260925-1"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -45,10 +44,6 @@
               <span>我本是－哲美系二手書店</span>
               <strong>書籍庫存查詢</strong>
             </h1>
-            <a class="warehouse-entry-link" href="./warehouse.html">
-              不知道要找什麼？去挖倉庫
-              <span aria-hidden="true">→</span>
-            </a>
           </div>
         </div>
 
@@ -166,6 +161,23 @@
       <p id="book-intake-dialog-description">
         請先確認書籍類型與保存狀況。實際是否收購及估價，仍由店主逐本判斷。
       </p>
+      <section class="book-intake-methods" aria-labelledby="book-intake-methods-title">
+        <h3 id="book-intake-methods-title">收書方式</h3>
+        <div class="book-intake-method-list">
+          <article class="book-intake-method">
+            <strong>少量書籍｜店內收購</strong>
+            <p>
+              若書籍數量不多，請留意社群公布的收購日，並於開放日期將書帶至店內。收購日原則上每月安排一次，實際日期會依書籍整理進度與庫存狀況調整；出發前請先確認最新公告，謝謝您的配合。
+            </p>
+          </article>
+          <article class="book-intake-method">
+            <strong>50 本以上｜預約到府收購</strong>
+            <p>
+              書籍數量達 50 本以上，可先拍攝書籍整體與書背照片傳給我們評估。確認符合收購範圍後，我們會再與您聯繫，安排到府收購的日期與時間。
+            </p>
+          </article>
+        </div>
+      </section>
       <a
         class="dialog-image-link"
         href="./assets/收書說明_收購原則.png"

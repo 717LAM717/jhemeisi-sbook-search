@@ -690,6 +690,45 @@ td {
   line-height: 1.7;
 }
 
+.book-intake-methods {
+  margin: 0 20px 18px;
+}
+
+.book-intake-methods h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.book-intake-method-list {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.book-intake-method {
+  padding: 14px 15px;
+  border: 1px solid rgba(185, 154, 83, 0.38);
+  border-radius: 8px;
+  background: rgba(247, 239, 220, 0.62);
+}
+
+.book-intake-method strong {
+  display: block;
+  color: #4b4131;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.book-intake-method p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
 .dialog-image-link {
   display: block;
   margin: 0 20px;
@@ -890,9 +929,14 @@ td {
   }
 
   .book-intake-dialog > p,
+  .book-intake-methods,
   .dialog-image-link {
     margin-right: 16px;
     margin-left: 16px;
+  }
+
+  .book-intake-method-list {
+    grid-template-columns: 1fr;
   }
 
   .dialog-actions {
