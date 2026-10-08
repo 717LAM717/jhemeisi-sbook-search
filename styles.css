@@ -683,15 +683,29 @@ td {
   line-height: 1;
 }
 
-.book-intake-dialog > p {
-  margin: 16px 20px;
+.book-intake-intro {
+  margin: 18px 20px 16px;
+}
+
+.book-intake-intro h3,
+.book-intake-image-title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.14rem;
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.book-intake-intro p {
+  margin: 8px 0 0;
   color: var(--muted);
   font-size: 0.94rem;
   line-height: 1.7;
 }
 
 .book-intake-methods {
-  margin: 0 20px 18px;
+  margin: 0 20px 14px;
 }
 
 .book-intake-methods h3 {
@@ -700,6 +714,13 @@ td {
   font-family: var(--font-serif);
   font-size: 1.08rem;
   font-weight: 900;
+}
+
+.book-intake-section-intro {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
 }
 
 .book-intake-method-list {
@@ -727,6 +748,43 @@ td {
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.7;
+}
+
+.book-donation-section {
+  margin: 0 20px 18px;
+  padding: 16px;
+  border: 1px solid rgba(113, 107, 98, 0.28);
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.book-intake-kicker {
+  margin: 0 0 4px;
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.book-donation-section h3 {
+  margin: 0 0 10px;
+  color: #4b4131;
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.book-donation-section p:not(.book-intake-kicker) {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.book-intake-image-title {
+  margin: 0 20px 10px;
+  font-size: 1.08rem;
 }
 
 .dialog-image-link {
@@ -928,8 +986,10 @@ td {
     padding: 16px;
   }
 
-  .book-intake-dialog > p,
+  .book-intake-intro,
   .book-intake-methods,
+  .book-donation-section,
+  .book-intake-image-title,
   .dialog-image-link {
     margin-right: 16px;
     margin-left: 16px;

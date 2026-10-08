@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260925-1" />
+    <link rel="stylesheet" href="./styles.css?v=20261008-1" />
 
     <!-- Google tag (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G9T6ZLVH8P"></script>
@@ -30,8 +30,8 @@
       gtag("config", "G-G9T6ZLVH8P");
     </script>
 
-    <script defer src="./config.js?v=20260925-1"></script>
-    <script defer src="./app.js?v=20260925-1"></script>
+    <script defer src="./config.js?v=20261008-1"></script>
+    <script defer src="./app.js?v=20261008-1"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -74,7 +74,7 @@
             <strong id="book-intake-title">家裡有書想整理？</strong>
             <span>先看看哲美系的收書原則，再決定是否與我們聯繫。</span>
           </div>
-          <button id="openBookIntake" type="button">我有書要處理</button>
+          <button id="openBookIntake" type="button">我要賣書</button>
         </aside>
       </section>
 
@@ -154,15 +154,21 @@
       <div class="dialog-header">
         <div>
           <p class="eyebrow">Book Intake Guide</p>
-          <h2 id="book-intake-dialog-title">二手書收購原則</h2>
+          <h2 id="book-intake-dialog-title">我要賣書</h2>
         </div>
         <button class="dialog-close" id="closeBookIntake" type="button" aria-label="關閉收書說明">×</button>
       </div>
-      <p id="book-intake-dialog-description">
-        請先確認書籍類型與保存狀況。實際是否收購及估價，仍由店主逐本判斷。
-      </p>
+      <section class="book-intake-intro" aria-labelledby="book-intake-intro-title">
+        <h3 id="book-intake-intro-title">想賣書，或只是想替書架騰出空間？</h3>
+        <p id="book-intake-dialog-description">
+          除了二手書收購，我們也歡迎您將不再需要的書籍免費交給我們處理。以下兩種方式不同，請依自己的需求選擇。
+        </p>
+      </section>
       <section class="book-intake-methods" aria-labelledby="book-intake-methods-title">
-        <h3 id="book-intake-methods-title">收書方式</h3>
+        <h3 id="book-intake-methods-title">二手書收購</h3>
+        <p class="book-intake-section-intro">
+          我們會依照書籍內容、書況及市場需求，評估是否收購並提供價格。實際收購品項與數量，仍須經過評估確認。
+        </p>
         <div class="book-intake-method-list">
           <article class="book-intake-method">
             <strong>少量書籍｜店內收購</strong>
@@ -178,6 +184,26 @@
           </article>
         </div>
       </section>
+      <section class="book-donation-section" aria-labelledby="book-donation-title">
+        <p class="book-intake-kicker">不需要出售所得，也可以交給我們</p>
+        <h3 id="book-donation-title">免費提供書籍／整批整理</h3>
+        <p>
+          如果您只是希望替書架騰出空間，不需要出售書籍，也歡迎與我們聯繫。
+        </p>
+        <p>
+          我們可以協助接手整批書籍，包含不適合再次販售的書籍，後續由我們分類、整理，安排重新流通或回收。免費提供書籍不會向您收取處理費。
+        </p>
+        <p>
+          您不需要事先篩選哪些書可以販售，但請先與我們聯繫，確認書籍數量、交接方式及適合的時間。
+        </p>
+        <p>
+          實際是否接受、可接手的數量與交接時間，仍會依當時的人力、空間及處理進度評估；必要時可能延後安排。
+        </p>
+        <p>
+          歡迎自行將書籍送至基地；如需到府載運，請事先預約，由我們依當時的人力、空間及處理進度評估安排。
+        </p>
+      </section>
+      <h3 class="book-intake-image-title">二手書收購原則</h3>
       <a
         class="dialog-image-link"
         href="./assets/收書說明_收購原則.png"
