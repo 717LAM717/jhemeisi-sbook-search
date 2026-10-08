@@ -723,6 +723,83 @@ td {
   line-height: 1.7;
 }
 
+.book-intake-status {
+  margin: 0 0 12px;
+  padding: 14px 15px;
+  border: 1px solid rgba(161, 15, 27, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.86);
+}
+
+.book-intake-status-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.book-intake-status-heading > span {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.book-intake-status-heading h4 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.book-intake-status-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.book-intake-status-grid > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid rgba(185, 154, 83, 0.3);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.book-intake-status-grid strong {
+  color: #4b4131;
+  font-size: 0.87rem;
+}
+
+.intake-status-badge {
+  color: #386341;
+  font-size: 0.84rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.intake-status-badge.is-closed {
+  color: var(--accent);
+}
+
+.book-intake-status-notice,
+.book-intake-status-reminder {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.book-intake-status-reminder {
+  color: #4b4131;
+  font-weight: 700;
+}
+
 .book-intake-method-list {
   display: grid;
   gap: 10px;
@@ -743,6 +820,29 @@ td {
   line-height: 1.45;
 }
 
+.book-intake-method-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.method-status-badge {
+  flex: 0 0 auto;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(56, 99, 65, 0.1);
+  color: #386341;
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.method-status-badge.is-closed {
+  background: rgba(161, 15, 27, 0.08);
+  color: var(--accent);
+}
+
 .book-intake-method p {
   margin: 7px 0 0;
   color: var(--muted);
@@ -759,14 +859,6 @@ td {
   background: rgba(255, 255, 255, 0.76);
 }
 
-.book-intake-kicker {
-  margin: 0 0 4px;
-  color: var(--gold);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
 .book-donation-section h3 {
   margin: 0 0 10px;
   color: #4b4131;
@@ -775,7 +867,14 @@ td {
   font-weight: 900;
 }
 
-.book-donation-section p:not(.book-intake-kicker) {
+.book-donation-section h4 {
+  margin: 14px 0 2px;
+  color: #4b4131;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.book-donation-section p {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 0.9rem;
@@ -785,6 +884,13 @@ td {
 .book-intake-image-title {
   margin: 0 20px 10px;
   font-size: 1.08rem;
+}
+
+.book-intake-image-note {
+  margin: -2px 20px 10px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
 }
 
 .dialog-image-link {
@@ -990,12 +1096,23 @@ td {
   .book-intake-methods,
   .book-donation-section,
   .book-intake-image-title,
+  .book-intake-image-note,
   .dialog-image-link {
     margin-right: 16px;
     margin-left: 16px;
   }
 
   .book-intake-method-list {
+    grid-template-columns: 1fr;
+  }
+
+  .book-intake-status-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .book-intake-status-grid {
     grid-template-columns: 1fr;
   }
 

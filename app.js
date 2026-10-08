@@ -1,6 +1,7 @@
 const config = window.BOOK_SEARCH_CONFIG || {};
 const API_URL = config.API_URL || "";
 const MIN_QUERY_LENGTH = Number(config.MIN_QUERY_LENGTH || 1);
+const intakeStatusConfig = window.BOOK_INTAKE_STATUS || {};
 
 const RECENT_TITLE = "最近來到哲美系的書";
 const RECENT_DESCRIPTION = "這裡會顯示近期整理建檔的書籍。若想找特定書名、作者或關鍵字，也可以直接搜尋。";
@@ -30,6 +31,11 @@ const toggleRecentBooksButton = document.querySelector("#toggleRecentBooks");
 const filterButtons = [...document.querySelectorAll("[data-book-filter]")];
 const openBookIntakeButton = document.querySelector("#openBookIntake");
 const bookIntakeDialog = document.querySelector("#bookIntakeDialog");
+const bookIntakeStatusTitle = document.querySelector("#book-intake-status-title");
+const appointmentIntakeStatus = document.querySelector("#appointmentIntakeStatus");
+const storeIntakeStatus = document.querySelector("#storeIntakeStatus");
+const storeMethodStatus = document.querySelector("#storeMethodStatus");
+const bookIntakeStatusNotice = document.querySelector("#bookIntakeStatusNotice");
 const closeBookIntakeButtons = [
   document.querySelector("#closeBookIntake"),
   document.querySelector("#closeBookIntakeBottom"),
@@ -99,6 +105,7 @@ window.addEventListener("popstate", () => {
 });
 
 hideEmptyState();
+renderBookIntakeStatus();
 searchInput.value = getQueryFromUrl();
 updateClearButton();
 loadBooks(searchInput.value.trim(), { historyMode: "replace" });
@@ -306,6 +313,44 @@ function closeBookIntakeDialog() {
   } else {
     bookIntakeDialog.removeAttribute("open");
   }
+}
+
+function renderBookIntakeStatus() {
+  const month = String(intakeStatusConfig.month || "本月").trim();
+  const appointmentOpen = intakeStatusConfig.appointmentOpen === true;
+  const storeOpen = intakeStatusConfig.storeOpen === true;
+
+  bookIntakeStatusTitle.textContent = `${month}收書狀態`;
+  setBookIntakeStatusBadge(appointmentIntakeStatus, appointmentOpen);
+  setBookIntakeStatusBadge(storeIntakeStatus, storeOpen);
+  setStoreMethodStatus(storeOpen);
+  bookIntakeStatusNotice.textContent = getBookIntakeStatusNotice(appointmentOpen, storeOpen);
+}
+
+function setBookIntakeStatusBadge(element, isOpen) {
+  element.textContent = isOpen ? "O（開放）" : "X（暫停）";
+  element.classList.toggle("is-closed", !isOpen);
+}
+
+function setStoreMethodStatus(isOpen) {
+  storeMethodStatus.textContent = isOpen ? "本月開放" : "本月暫停";
+  storeMethodStatus.classList.toggle("is-closed", !isOpen);
+}
+
+function getBookIntakeStatusNotice(appointmentOpen, storeOpen) {
+  if (appointmentOpen && !storeOpen) {
+    return "因近期收到的書籍數量較多，目前仍在陸續整理中。考量現有庫存及處理進度，這兩個月暫無排定店內收購日，還請見諒。免費交書或整批整理需求，仍可先聯繫詢問，實際安排以雙方確認為準。";
+  }
+
+  if (appointmentOpen && storeOpen) {
+    return "目前預約到府收購（50 本以上）與店內收購皆開放。到府收購請先提供書籍照片與大約數量供我們評估；店內收購請留意公告日期。";
+  }
+
+  if (!appointmentOpen && storeOpen) {
+    return "目前暫停預約到府收購（50 本以上），店內收購仍依公告日期開放。免費交書或整批整理需求可先聯繫詢問，實際安排以雙方確認為準。";
+  }
+
+  return "目前暫停預約到府收購（50 本以上）與店內付費收購。免費交書或整批整理需求仍可先聯繫詢問，實際是否接收及安排時間以雙方確認為準。";
 }
 
 function renderPurchaseCell(book) {
