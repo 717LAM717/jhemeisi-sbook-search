@@ -321,14 +321,14 @@ function renderBookIntakeStatus() {
   const storeOpen = intakeStatusConfig.storeOpen === true;
 
   bookIntakeStatusTitle.textContent = `${month}收書狀態`;
-  setBookIntakeStatusBadge(appointmentIntakeStatus, appointmentOpen);
+  setBookIntakeStatusBadge(appointmentIntakeStatus, appointmentOpen, "O（開放評估）");
   setBookIntakeStatusBadge(storeIntakeStatus, storeOpen);
   setStoreMethodStatus(storeOpen);
   bookIntakeStatusNotice.textContent = getBookIntakeStatusNotice(appointmentOpen, storeOpen);
 }
 
-function setBookIntakeStatusBadge(element, isOpen) {
-  element.textContent = isOpen ? "O（開放）" : "X（暫停）";
+function setBookIntakeStatusBadge(element, isOpen, openLabel = "O（開放）") {
+  element.textContent = isOpen ? openLabel : "X（暫停）";
   element.classList.toggle("is-closed", !isOpen);
 }
 
